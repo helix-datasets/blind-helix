@@ -1,0 +1,5 @@
+py-tlsh
+
+Cython
+scipy
+git+https://github.com/EdwardRaff/pyLZJD.git#egg=pyLZJD

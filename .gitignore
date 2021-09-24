@@ -1,0 +1,6 @@
+*.swp
+*.pyc
+*.log
+*.bhlx
+
+*.egg-info/
