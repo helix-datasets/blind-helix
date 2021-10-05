@@ -3,7 +3,7 @@ from setuptools import find_packages
 
 setup(
     name="blind-helix",
-    version="0.1.0",
+    version="0.2.0.dev",
     author="MIT Lincoln Laboratory",
     author_email="helix@ll.mit.edu",
     url="https://github.com/helix-datasets/blind-helix",
