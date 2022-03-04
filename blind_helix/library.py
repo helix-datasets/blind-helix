@@ -162,15 +162,31 @@ class Library(metaclass=abc.ABCMeta):
 
         for _function in self.functions:
 
-            class Component(component.LibrarySliceComponent):
-                _library = self._library
-                library = self.name
-                version = self.version
-                date = self.date
+            _included = self.included.get(_function, [])
 
+            tags = [
+                ("function", "{}-{}".format(self.name, f))
+                for f in _included + [_function]
+            ]
+            tags.append(("library", self.name))
+            tags.append(("type", "library-slice"))
+            _tags = set(tags)
+
+            class Component(component.LibrarySliceComponent):
+                name = "{}-{}".format(self.name, _function)
+                verbose_name = name
+                version = self.version
+                description = "The {} function from the {} library.".format(
+                    _function, self.name
+                )
+                date = self.date
+                tags = _tags
+
+                library = self.name
                 path = self._library.name
+                _library = self._library
                 function = _function
-                included = self.included.get(_function, [])
+                included = _included
 
             Component.__name__ = "{}{}{}".format(
                 self.name, _function.title().replace("_", ""), Component.__name__
