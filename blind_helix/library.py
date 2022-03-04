@@ -7,6 +7,7 @@ import tempfile
 from datetime import datetime
 import base64
 
+from helix import component as helix_component
 from helix import exceptions as helix_exceptions
 
 from . import component
@@ -162,6 +163,7 @@ class Library(metaclass=abc.ABCMeta):
         for _function in self.functions:
 
             class Component(component.LibrarySliceComponent):
+                _library = self._library
                 library = self.name
                 version = self.version
                 date = self.date
@@ -339,3 +341,8 @@ class Library(metaclass=abc.ABCMeta):
         """
 
         return Library.loads(f.read())
+
+
+class BlindHelixLibraryLoader(helix_component.Loader):
+    def load(self, f):
+        return Library.load(f)().components

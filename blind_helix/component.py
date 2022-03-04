@@ -58,7 +58,7 @@ class LibrarySliceComponent(component.Component):
 
     @property
     def verbose_name(self):
-        return "{} {}".join(self.verbose_library, self.function)
+        return "{} {}".format(self.verbose_library, self.function)
 
     @property
     def description(self):

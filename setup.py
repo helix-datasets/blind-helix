@@ -46,5 +46,8 @@ setup(
     zip_safe=False,
     entry_points={
         "console_scripts": ["blind-helix = blind_helix.__main__:main"],
+        "helix.components.loaders": [
+            "blind-helix = blind_helix.library:BlindHelixLibraryLoader"
+        ],
     },
 )
