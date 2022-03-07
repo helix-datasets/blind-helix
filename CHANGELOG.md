@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Support for HELIX Component Loader interface.
 
+### Fixed
+- Blind HELIX Components now correctly conform to the Component interface.
+
 ## [0.1.0] - 2021-09-24
 ### Added
 - Initial public Blind HELIX alpha release.
