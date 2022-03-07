@@ -13,18 +13,16 @@ class LibrarySliceComponent(component.Component):
     the entire call subgraph based at that function.
     """
 
+    type = "library-slice"
+
+    blueprints = ["cmake-cpp"]
+
     @property
     @abc.abstractmethod
     def library(self):
         """The name of the library to which this component belongs."""
 
         return ""
-
-    @property
-    def verbose_library(self):
-        """Optional verbose version of the library name."""
-
-        return self.library
 
     @property
     @abc.abstractmethod
@@ -51,38 +49,6 @@ class LibrarySliceComponent(component.Component):
     This is optional.
     """
     included = []
-
-    @property
-    def name(self):
-        return "{}-{}".format(self.library, self.function)
-
-    @property
-    def verbose_name(self):
-        return "{} {}".join(self.verbose_library, self.function)
-
-    @property
-    def description(self):
-        return "The {} function from the {} library.".format(
-            self.function, self.verbose_library
-        )
-
-    type = "library-slice"
-
-    @property
-    def tags(self):
-        tags = set(
-            [
-                ("library", self.library),
-                ("type", "library-slice"),
-            ]
-        )
-
-        for function in self.included + [self.function]:
-            tags.add(("function", "{}-{}".format(self.library, function)))
-
-        return tuple(tags)
-
-    blueprints = ["cmake-cpp"]
 
     @property
     def libraries(self):
@@ -141,9 +107,13 @@ class LibrarySliceComponent(component.Component):
 
         return json.dumps(
             {
-                "library": cls.library,
+                "name": cls.name,
+                "verbose_name": cls.verbose_name,
                 "version": cls.version,
+                "description": cls.description,
                 "date": cls.date,
+                "tags": cls.tags,
+                "library": cls.library,
                 "path": cls.path,
                 "function": cls.function,
                 "included": cls.included,
@@ -165,10 +135,14 @@ class LibrarySliceComponent(component.Component):
         data = json.loads(string)
 
         class ComponentInstance(LibrarySliceComponent):
-            library = data["library"]
+            name = data["name"]
+            verbose_name = data["verbose_name"]
             version = data["version"]
+            description = data["description"]
             date = data["date"]
+            tags = data["tags"]
 
+            library = data["library"]
             path = data["path"]
             function = data["function"]
             included = data["included"]
