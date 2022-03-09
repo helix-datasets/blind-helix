@@ -84,25 +84,6 @@ blind-helix parse-many vcpkg-linux-library output/ \
     zlib crc32c protobuf-c cpuinfo mbedtls jansson openjpg
 ```
 
-### Simple Dataset Generation
-
-Once you have a sizeable collection of components, Blind HELIX also includes a
-few very simple, naive dataset generation strategies. For example, to generate
-100 randomized combinations of 20 components from a library of Blind HELIX
-export files:
-
-```bash
-blind-helix dataset random output/ \
-    --samples 100 \
-    --components 20 \
-    /path/to/exports/*.bhlx
-```
-
-Note: Blind HELIX is not intended as a dataset generation tool - its main focus
-is HELIX Component generation. For more complex dataset generation and better
-control over the statistical properties of the generated datasets it's best to
-write scripts to generate them yourself.
-
 ## Contributing
 
 Pull requests and GitHub issues are welcome.
