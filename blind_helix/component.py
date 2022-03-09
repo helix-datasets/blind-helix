@@ -1,5 +1,4 @@
 import abc
-import json
 import tempfile
 
 from helix import component
@@ -91,63 +90,6 @@ class LibrarySliceComponent(component.Component):
             raise e
 
         return working, artifacts
-
-    @classmethod
-    def saves(cls):
-        """Save this Component to a string.
-
-        Returns:
-            A string serialized version of this class which can be loaded with
-            ``loads()``.
-
-        Note:
-            Components are not necessarily portable - there's no guarantee that
-            reloading this saved Component will result in a working Component.
-        """
-
-        return json.dumps(
-            {
-                "name": cls.name,
-                "verbose_name": cls.verbose_name,
-                "version": cls.version,
-                "description": cls.description,
-                "date": cls.date,
-                "tags": cls.tags,
-                "library": cls.library,
-                "path": cls.path,
-                "function": cls.function,
-                "included": cls.included,
-            }
-        )
-
-    @staticmethod
-    def loads(string):
-        """Load a Component from a string.
-
-        Args:
-            string (str): A string representation of a Component generated with
-                ``saves()``.
-
-        Returns:
-            A Component class loaded from the given string.
-        """
-
-        data = json.loads(string)
-
-        class ComponentInstance(LibrarySliceComponent):
-            name = data["name"]
-            verbose_name = data["verbose_name"]
-            version = data["version"]
-            description = data["description"]
-            date = data["date"]
-            tags = data["tags"]
-
-            library = data["library"]
-            path = data["path"]
-            function = data["function"]
-            included = data["included"]
-
-        return ComponentInstance
 
 
 __all__ = ["LibrarySliceComponent"]
